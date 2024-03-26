@@ -1,11 +1,32 @@
 {
   "dependencies": {
+    "com.cysharp.unitask": {
+      "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "01c8fada1f4d48465f7ef31b46b150d4f6e428aa"
+    },
     "com.scellecs.morpeh": {
       "version": "https://github.com/scellecs/morpeh.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
       "hash": "2eb519ce4a4c3d0cc3096e92d0db1166aa69d88a"
+    },
+    "com.unity.addressables": {
+      "version": "1.21.20",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.scriptablebuildpipeline": "1.21.22",
+        "com.unity.modules.assetbundle": "1.0.0",
+        "com.unity.modules.imageconversion": "1.0.0",
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.collab-proxy": {
       "version": "2.3.1",
@@ -69,6 +90,13 @@
     },
     "com.unity.performance.profile-analyzer": {
       "version": "1.2.2",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.scriptablebuildpipeline": {
+      "version": "1.21.22",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
