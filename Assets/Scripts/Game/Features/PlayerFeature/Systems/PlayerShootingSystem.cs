@@ -2,6 +2,7 @@ using System.Threading;
 using Core;
 using Cysharp.Threading.Tasks;
 using Scellecs.Morpeh;
+using ShipsWar.Game.Features.BulletsFeature.Components;
 using ShipsWar.Game.Features.InputFeature.Components;
 using ShipsWar.Game.Features.PlayerFeature.Components;
 using ShipsWar.Game.Features.TransformFeature.Components;
@@ -20,7 +21,7 @@ namespace ShipsWar.Game.Features.PlayerFeature.Systems
         [Inject] private IObjectResolver _objectResolver;
         
         private Stash<InputShooting> _inputStash;
-        private Stash<Bullet> _bulletStash;
+        private Stash<BulletCreate> _bulletCreateStash;
         private Stash<GameObjectRef> _gameObjectRef;
         private Stash<BulletSpeed> _bulletSpeed;
         
@@ -33,7 +34,7 @@ namespace ShipsWar.Game.Features.PlayerFeature.Systems
         public async UniTask StartAsync(CancellationToken cancellation)
         {
             _inputStash = _world.GetStash<InputShooting>();
-            _bulletStash = _world.GetStash<Bullet>();
+            _bulletCreateStash = _world.GetStash<BulletCreate>();
             _gameObjectRef = _world.GetStash<GameObjectRef>();
             _bulletSpeed = _world.GetStash<BulletSpeed>();
 
@@ -62,11 +63,9 @@ namespace ShipsWar.Game.Features.PlayerFeature.Systems
                     }
                     
                     var playerPosition = _gameObjectRef.Get(playerEntity).GameObject.transform.position;
-                    var bulletInstance = _objectResolver.Instantiate(_bulletPrefab, playerPosition, Quaternion.identity);
                         
                     var bulletEntity = _world.CreateEntity();
-                    _bulletStash.Add(bulletEntity);
-                    _gameObjectRef.Set(bulletEntity, new GameObjectRef { GameObject = bulletInstance });
+                    _bulletCreateStash.Set(bulletEntity, new BulletCreate { SpawnPosition = playerPosition });
                     _bulletSpeed.Set(bulletEntity, new BulletSpeed { Speed = _config.BulletSpeed });
 
                     _timer = _config.ReloadTime;

@@ -10,11 +10,13 @@ namespace ShipsWar.Game.Features
         private readonly InputFeature.InputFeature _inputFeature = new InputFeature.InputFeature();
         private readonly PlayerFeature.PlayerFeature _playerFeature = new PlayerFeature.PlayerFeature();
         private readonly EnemiesFeature.EnemiesFeature _enemiesFeature = new EnemiesFeature.EnemiesFeature();
+        private readonly BulletsFeature.BulletsFeature _bulletsFeature = new BulletsFeature.BulletsFeature();
         
         public void Inject(IObjectResolver objectResolver)
         {
             _inputFeature.Inject(objectResolver);
             _playerFeature.Inject(objectResolver);
+            _bulletsFeature.Inject(objectResolver);
         }
         
         public async UniTask StartAsync(CancellationToken cancellation)
@@ -22,6 +24,7 @@ namespace ShipsWar.Game.Features
             _inputFeature.Start();
             await _playerFeature.StartAsync(cancellation);
             _enemiesFeature.Start();
+            await _bulletsFeature.StartAsync(cancellation);
         }
 
         public void Tick()
@@ -29,6 +32,7 @@ namespace ShipsWar.Game.Features
             _inputFeature.Tick();
             _playerFeature.Tick();
             _enemiesFeature.Tick();
+            _bulletsFeature.Tick();
         }
     }
 }

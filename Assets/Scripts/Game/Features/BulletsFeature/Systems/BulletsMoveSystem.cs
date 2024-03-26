@@ -1,4 +1,5 @@
 using Scellecs.Morpeh;
+using ShipsWar.Game.Features.BulletsFeature.Components;
 using ShipsWar.Game.Features.PlayerFeature.Components;
 using ShipsWar.Game.Features.TransformFeature.Components;
 using UnityEngine;
@@ -7,7 +8,7 @@ using VContainer.Unity;
 
 namespace ShipsWar.Game.Features.PlayerFeature.Systems
 {
-    public class MoveBulletsSystem : IStartable, ITickable
+    public class BulletsMoveSystem : IStartable, ITickable
     {
         [Inject] private World _world;
         

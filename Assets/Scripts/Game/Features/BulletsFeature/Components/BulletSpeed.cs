@@ -1,6 +1,6 @@
 using Scellecs.Morpeh;
 
-namespace ShipsWar.Game.Features.PlayerFeature.Components
+namespace ShipsWar.Game.Features.BulletsFeature.Components
 {
     public struct BulletSpeed : IComponent
     {
