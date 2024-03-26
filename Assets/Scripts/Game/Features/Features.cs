@@ -16,6 +16,7 @@ namespace ShipsWar.Game.Features
         {
             _inputFeature.Inject(objectResolver);
             _playerFeature.Inject(objectResolver);
+            _enemiesFeature.Inject(objectResolver);
             _bulletsFeature.Inject(objectResolver);
         }
         
@@ -23,7 +24,7 @@ namespace ShipsWar.Game.Features
         {
             _inputFeature.Start();
             await _playerFeature.StartAsync(cancellation);
-            _enemiesFeature.Start();
+            await _enemiesFeature.StartAsync(cancellation);
             await _bulletsFeature.StartAsync(cancellation);
         }
 

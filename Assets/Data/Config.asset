@@ -12,7 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcba9f1690a447198daa1a226b77b78, type: 3}
   m_Name: Config
   m_EditorClassIdentifier: 
-  _spawnRate: 0
   _sideMoveSpeed: 10
   _reloadTime: 0.2
   _bulletSpeed: 15
+  _spawnRate: 15
+  _enemiesSideMove: 3
+  _enemiesSpeed: 0.5
+  _enemiesReloadTime: 0.5
+  _enemiesStartHealth: 100
+  _enemiesBulletSpeed: 10

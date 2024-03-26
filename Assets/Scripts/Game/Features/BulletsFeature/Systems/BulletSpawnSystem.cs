@@ -40,6 +40,7 @@ namespace ShipsWar.Game.Features.BulletsFeature.Systems
             
             _bulletPrefab = await _assetProvider.LoadAssetAsync<GameObject>(_assets.Bullet);
         }
+        
         public void Tick()
         {
             foreach (var entity in _bulletCreateFilter)
@@ -51,7 +52,6 @@ namespace ShipsWar.Game.Features.BulletsFeature.Systems
 
                 _bulletStash.Add(entity);
                 _gameObjectRef.Set(entity, new GameObjectRef { GameObject = bulletInstance });
-                _bulletSpeed.Set(entity, new BulletSpeed { Speed = _config.BulletSpeed });
                 
                 _bulletCreate.Remove(entity);
             }

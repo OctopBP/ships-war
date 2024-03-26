@@ -22,3 +22,8 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  _enemy:
+    m_AssetGUID: 16c09806f0c474e55ac52a1cfaf9fdc9
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

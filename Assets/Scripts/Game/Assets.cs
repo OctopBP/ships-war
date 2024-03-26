@@ -9,5 +9,6 @@ namespace ShipsWar.Game
     {
         [SerializeField, PublicAccessor] private AssetReference _player;
         [SerializeField, PublicAccessor] private AssetReference _bullet;
+        [SerializeField, PublicAccessor] private AssetReference _enemy;
     }
 }
