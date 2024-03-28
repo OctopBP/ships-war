@@ -1,14 +1,14 @@
-using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Scellecs.Morpeh;
 using ShipsWar.Game.Features.InputFeature.Components;
 using ShipsWar.Game.Features.PlayerFeature.Components;
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 
 namespace ShipsWar.Game.Features.PlayerFeature.Systems
 {
-    public class PlayerMoveSystem : IStartable, ITickable, IDisposable
+    public partial class PlayerMoveSystem : IUpdateSystem
     {
         [Inject] private World _world;
         [Inject] private Config _config;
@@ -16,17 +16,10 @@ namespace ShipsWar.Game.Features.PlayerFeature.Systems
         private Stash<InputMoveDirection> _inputStash;
         private Stash<PlayerPosition> _playerPosition;
         
-        private Filter _inputFilter;
-        private Filter _playerFilter;
+        [With(typeof(InputMoveDirection))] private Filter _inputFilter;
+        [With(typeof(Player), typeof(PlayerPosition))] private Filter _playerFilter;
         
-        public void Start()
-        {
-            _inputFilter = _world.Filter.With<InputMoveDirection>().Build();
-            _playerFilter = _world.Filter.With<Player>().With<PlayerPosition>().Build();
-            
-            _inputStash = _world.GetStash<InputMoveDirection>();
-            _playerPosition = _world.GetStash<PlayerPosition>();
-        }
+        public async UniTask StartAsync(CancellationToken cancellation) { }
 
         public void Tick()
         {
@@ -40,13 +33,6 @@ namespace ShipsWar.Game.Features.PlayerFeature.Systems
                     player.Position += input.direction * deltaTime * _config.SideMoveSpeed;
                 }
             }
-        }
-
-        public void Dispose()
-        {
-            _world.Dispose();
-            _inputStash.Dispose();
-            _playerPosition.Dispose();
         }
     }
 }

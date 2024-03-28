@@ -1,5 +1,4 @@
 using System.Threading;
-using Core;
 using Cysharp.Threading.Tasks;
 using Scellecs.Morpeh;
 using ShipsWar.Game.Features.BulletsFeature.Components;
@@ -7,11 +6,10 @@ using ShipsWar.Game.Features.EnemiesFeature.Components;
 using ShipsWar.Game.Features.TransformFeature.Components;
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 
 namespace ShipsWar.Game.Features.EnemiesFeature.Systems
 {
-    public class EnemiesShootSystem : IStartable, ITickable
+    public partial class EnemiesShootSystem : IUpdateSystem
     {
         [Inject] private Config _config;
         [Inject] private World _world;
@@ -21,17 +19,10 @@ namespace ShipsWar.Game.Features.EnemiesFeature.Systems
         private Stash<BulletCreate> _bulletCreateStash;
         private Stash<BulletSpeed> _bulletSpeed;
         
+        [With(typeof(Enemy), typeof(GameObjectRef), typeof(Cooldown))]
         private Filter _filter;
         
-        public void Start()
-        {
-            _cooldown = _world.GetStash<Cooldown>();
-            _gameObjectRef = _world.GetStash<GameObjectRef>();
-            _bulletCreateStash = _world.GetStash<BulletCreate>();
-            _bulletSpeed = _world.GetStash<BulletSpeed>();
-            
-            _filter = _world.Filter.With<Enemy>().With<GameObjectRef>().With<Cooldown>().Build();
-        }
+        public async UniTask StartAsync(CancellationToken cancellation) { }
 
         public void Tick()
         {

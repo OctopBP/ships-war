@@ -10,7 +10,7 @@ using VContainer.Unity;
 
 namespace ShipsWar.Game.Features.EnemiesFeature.Systems
 {
-    public class EnemiesSpawnSystem : IAsyncStartable, ITickable
+    public partial class EnemiesSpawnSystem : IUpdateSystem
     {
         [Inject] private IObjectResolver _objectResolver;
         [Inject] private AssetProvider _assetProvider;
@@ -30,11 +30,6 @@ namespace ShipsWar.Game.Features.EnemiesFeature.Systems
         
         public async UniTask StartAsync(CancellationToken cancellation)
         {
-            _enemy = _world.GetStash<Enemy>();
-            _gameObjectRef = _world.GetStash<GameObjectRef>();
-            _health = _world.GetStash<Health>();
-            _cooldown = _world.GetStash<Cooldown>();
-            _moveDirection = _world.GetStash<MoveDirection>();
             _prefab = await _assetProvider.LoadAssetAsync<GameObject>(_assets.Enemy);
         }
 

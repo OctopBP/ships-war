@@ -1,34 +1,31 @@
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Scellecs.Morpeh;
 using ShipsWar.Game.Features.EnemiesFeature.Components;
 using ShipsWar.Game.Features.TransformFeature.Components;
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 
 namespace ShipsWar.Game.Features.EnemiesFeature.Systems
 {
-    public class EnemiesMoveSystem : IStartable, ITickable
+    public partial class EnemiesMoveSystem : IUpdateSystem
     {
         [Inject] private Config _config;
         [Inject] private World _world;
-        
-        const float CHANGE_DIRECTION_TIMER = 1f;
+
+        private const float ChangeDirectionTimer = 1f;
 
         private Stash<GameObjectRef> _gameObjectRef;
         private Stash<MoveDirection> _moveDirection;
         
+        [With(typeof(Enemy), typeof(GameObjectRef))]
         private Filter _filter;
 
         private float _timer;
         
-        public void Start()
+        public async UniTask StartAsync(CancellationToken cancellation)
         {
-            _gameObjectRef = _world.GetStash<GameObjectRef>();
-            _moveDirection = _world.GetStash<MoveDirection>();
-            
-            _filter = _world.Filter.With<Enemy>().With<GameObjectRef>().Build();
-            
-            _timer = CHANGE_DIRECTION_TIMER * 0.5f;
+            _timer = ChangeDirectionTimer * 0.5f;
         }
 
         public void Tick()
@@ -41,7 +38,7 @@ namespace ShipsWar.Game.Features.EnemiesFeature.Systems
                     moveDirection.Right = !moveDirection.Right;
                 }
                 
-                _timer = CHANGE_DIRECTION_TIMER;
+                _timer = ChangeDirectionTimer;
             }
             
             _timer -= Time.deltaTime;

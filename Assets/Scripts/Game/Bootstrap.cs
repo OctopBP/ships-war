@@ -21,6 +21,7 @@ namespace ShipsWar.Game
         {
             Debug.Log($"Bootstrap StartAsync");
             _features.Inject(_container);
+            _features.Initialize();
             await _features.StartAsync(cancellation);
 
             _inited = true;

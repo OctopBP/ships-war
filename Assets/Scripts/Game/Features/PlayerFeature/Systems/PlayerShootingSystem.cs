@@ -8,11 +8,10 @@ using ShipsWar.Game.Features.PlayerFeature.Components;
 using ShipsWar.Game.Features.TransformFeature.Components;
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 
 namespace ShipsWar.Game.Features.PlayerFeature.Systems
 {
-    public class PlayerShootingSystem : IAsyncStartable, ITickable
+    public partial class PlayerShootingSystem : IUpdateSystem
     {
         [Inject] private World _world;
         [Inject] private Config _config;
@@ -25,24 +24,13 @@ namespace ShipsWar.Game.Features.PlayerFeature.Systems
         private Stash<GameObjectRef> _gameObjectRef;
         private Stash<BulletSpeed> _bulletSpeed;
         
-        private Filter _inputFilter;
-        private Filter _playerFilter;
+        [With(typeof(InputShooting))] private Filter _inputFilter;
+        [With(typeof(Player), typeof(GameObjectRef))] private Filter _playerFilter;
 
         private GameObject _bulletPrefab;
         private float _timer;
         
-        public async UniTask StartAsync(CancellationToken cancellation)
-        {
-            _inputStash = _world.GetStash<InputShooting>();
-            _bulletCreateStash = _world.GetStash<BulletCreate>();
-            _gameObjectRef = _world.GetStash<GameObjectRef>();
-            _bulletSpeed = _world.GetStash<BulletSpeed>();
-
-            _inputFilter = _world.Filter.With<InputShooting>().Build();
-            _playerFilter = _world.Filter.With<Player>().With<GameObjectRef>().Build();
-            
-            _bulletPrefab = await _assetProvider.LoadAssetAsync<GameObject>(_assets.Bullet);
-        }
+        public async UniTask StartAsync(CancellationToken cancellation) { }
         
         public void Tick()
         {

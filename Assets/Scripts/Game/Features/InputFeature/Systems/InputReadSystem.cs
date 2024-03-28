@@ -1,30 +1,27 @@
-using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Scellecs.Morpeh;
 using ShipsWar.Game.Features.InputFeature.Components;
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 
 namespace ShipsWar.Game.Features.InputFeature.Systems
 {
-    public class InputReadSystem : IStartable, ITickable, IDisposable
+    public partial class InputReadSystem : IUpdateSystem
     {
         [Inject] private World _world;
         
         private Stash<InputMoveDirection> _inputStash;
         private Stash<InputShooting> _inputShooting;
+        
+        [With(typeof(InputMoveDirection), typeof(InputShooting))]
         private Filter _filter;
         
-        public void Start()
+        public async UniTask StartAsync(CancellationToken cancellation)
         {
-            _inputStash = _world.GetStash<InputMoveDirection>();
-            _inputShooting = _world.GetStash<InputShooting>();
-            
             var inputEntity = _world.CreateEntity();
             _inputStash.Add(inputEntity);
             _inputShooting.Add(inputEntity);
-            
-            _filter = _world.Filter.With<InputMoveDirection>().With<InputShooting>().Build();
         }
         
         public void Tick()
@@ -40,12 +37,6 @@ namespace ShipsWar.Game.Features.InputFeature.Systems
                 ref var inputShooting = ref _inputShooting.Get(entity);
                 inputShooting.Active = Input.GetKey(KeyCode.Space);
             }
-        }
-
-        public void Dispose()
-        {
-            _world.Dispose();
-            _inputStash.Dispose();
         }
     }
 }

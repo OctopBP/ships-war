@@ -1,29 +1,25 @@
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Scellecs.Morpeh;
 using ShipsWar.Game.Features.BulletsFeature.Components;
-using ShipsWar.Game.Features.PlayerFeature.Components;
 using ShipsWar.Game.Features.TransformFeature.Components;
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 
-namespace ShipsWar.Game.Features.PlayerFeature.Systems
+namespace ShipsWar.Game.Features.BulletsFeature.Systems
 {
-    public class BulletsMoveSystem : IStartable, ITickable
+    public partial class BulletsMoveSystem : IUpdateSystem
     {
         [Inject] private World _world;
         
         private Stash<GameObjectRef> _gameObjectRefStash;
         private Stash<BulletSpeed> _bulletSpeed;
         
+        [With(typeof(Bullet), typeof(GameObjectRef), typeof(BulletSpeed))]
         private Filter _bulletFilter;
         
-        public void Start()
-        {
-            _bulletFilter = _world.Filter.With<Bullet>().With<GameObjectRef>().With<BulletSpeed>().Build();
-            
-            _gameObjectRefStash = _world.GetStash<GameObjectRef>();
-            _bulletSpeed = _world.GetStash<BulletSpeed>();
-        }
+        public async UniTask StartAsync(CancellationToken cancellation) { }
+
         public void Tick()
         {
             foreach (var entity in _bulletFilter)

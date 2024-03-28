@@ -1,29 +1,24 @@
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Scellecs.Morpeh;
-using ShipsWar.Game.Features.InputFeature.Components;
 using ShipsWar.Game.Features.PlayerFeature.Components;
 using ShipsWar.Game.Features.TransformFeature.Components;
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 
 namespace ShipsWar.Game.Features.PlayerFeature.Systems
 {
-    public class PlayerApplyPositionSystem : IStartable, ITickable
+    public partial class PlayerApplyPositionSystem : IUpdateSystem
     {
         [Inject] private World _world;
         
         private Stash<GameObjectRef> _gameObjectRefStash;
         private Stash<PlayerPosition> _playerPosition;
         
+        [With(typeof(PlayerPosition), typeof(GameObjectRef))]
         private Filter _playerFilter;
         
-        public void Start()
-        {
-            _playerFilter = _world.Filter.With<PlayerPosition>().With<GameObjectRef>().Build();
-            
-            _playerPosition = _world.GetStash<PlayerPosition>();
-            _gameObjectRefStash = _world.GetStash<GameObjectRef>();
-        }
+        public async UniTask StartAsync(CancellationToken cancellation) { }
 
         public void Tick()
         {
